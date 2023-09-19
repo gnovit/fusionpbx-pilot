@@ -43,10 +43,10 @@ class Domain(ABC):
     def _switch_to(self, name):
         self.page.open(f"{app_path}?domain_uuid={self.uuid}&domain_change=true")
 
-    @property
-    def list(self):
-        self.page.open(app_path)
-        return self.page.container_rows_to_dict()
+    # @property
+    # def list(self):
+    #     self.page.open(app_path)
+    #     return self.page.container_rows_to_dict()
 
     @property
     def name(self):

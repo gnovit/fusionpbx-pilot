@@ -17,6 +17,13 @@ class AccessError(Exception):
         super().__init__(message)
 
 
+class SelectError(Exception):
+    def __init__(self, message=None):
+        if message is None:
+            message = "Select error"
+        super().__init__(message)
+
+
 class SeleniumObject(ABC):
     """Base class to handle selenium objects"""
 
@@ -48,21 +55,51 @@ class Page(SeleniumObject, ABC):
         self.login_user = login_user
         self.login_password = login_password
 
-    def container_rows_to_dict(self) -> dict[str:str]:
+    def container_rows(self, items: dict[str:tuple] = None) -> list[dict]:
         """Return a dict with the item:uuid rows
+        Default items are name: uuid
+
+        Args:
+            items (dict[str:tuple], optional): Dict of locator tuples to return where key is the name of attr. Defaults to None.
 
         Returns:
-            dic: {item: uuid}
+            dic: {name: uuid, item[key]: value}
         """
         container_rows = self.find_elements((By.CLASS_NAME, "list-row"))
-        d = {}
+        cr = []
         for row in container_rows:
+            d = {}
             uuid = row.find_element(
                 By.CSS_SELECTOR, "input[type='hidden']"
             ).get_attribute("value")
             name = row.find_element(By.CSS_SELECTOR, "td a[title='Edit']").text
             d[name] = uuid
-        return d
+            if items:
+                for key in items:
+                    key_value = row.find_element(*items[key]).text
+                    d[key] = key_value
+            cr.append(d)
+        return cr
+
+    def select_rows(self, names: list[str]):
+        """Select rows by name of objects
+
+        Args:
+            names (list[str]): List of name to select
+        """
+        if not isinstance(names, list):
+            raise TypeError("names must be a list")
+
+        container_rows = self.container_rows()
+        for name in names:
+            for row in container_rows:
+                if name in row:
+                    hidden_element = self.find_element(
+                        (By.CSS_SELECTOR, f"input[value='{row[name]}']")
+                    )
+                    hidden_element.find_element(By.XPATH, "..").click()
+                else:
+                    raise SelectError(f"Name {name} not found in rows")
 
     def has_permission(self):
         """Check if the current user has permission to access the page
@@ -77,7 +114,8 @@ class Page(SeleniumObject, ABC):
 
     def open(self, url):
         self._open(self.base_url + url)
-        if "login.php" in self.webdriver.current_url:
+        # TODO: Maybe check cookie?
+        if "login.php" in self.webdriver.current_url or "Login" in self.webdriver.title:
             self.login(self.login_user, self.login_password)
         if self.webdriver.current_url != self.base_url + url:
             self._open(self.base_url + url)

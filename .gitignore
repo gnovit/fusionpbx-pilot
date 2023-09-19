@@ -51,6 +51,7 @@ __pycache__
 .config
 
 # Ignore dynaconf secret files
-.secrets.*
+.secrets/
 .env
-img/
+stuff/
+.secrets.toml

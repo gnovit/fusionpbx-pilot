@@ -24,10 +24,10 @@ class Extension(ABC):
         self.name = name
         return self
 
-    @property
-    def list(self):
-        self.page.open(app_path)
-        return self.page.container_rows_to_dict()
+    # @property
+    # def list(self):
+    #     self.page.open(app_path)
+    #     return self.page.container_rows_to_dict()
 
     @property
     def name(self):
