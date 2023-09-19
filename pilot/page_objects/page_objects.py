@@ -17,11 +17,11 @@ class AccessError(Exception):
         super().__init__(message)
 
 
-class SelectError(Exception):
-    def __init__(self, message=None):
-        if message is None:
-            message = "Select error"
-        super().__init__(message)
+# class SelectError(Exception):
+#     def __init__(self, message=None):
+#         if message is None:
+#             message = "Select error"
+#         super().__init__(message)
 
 
 class SeleniumObject(ABC):
@@ -98,8 +98,6 @@ class Page(SeleniumObject, ABC):
                         (By.CSS_SELECTOR, f"input[value='{row[name]}']")
                     )
                     hidden_element.find_element(By.XPATH, "..").click()
-                else:
-                    raise SelectError(f"Name {name} not found in rows")
 
     def has_permission(self):
         """Check if the current user has permission to access the page
