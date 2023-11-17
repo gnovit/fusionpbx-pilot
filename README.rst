@@ -23,7 +23,7 @@ Instantiate the FusionPBX class
 
 - Domain delete:
   .. code python
-      del d.domain
+      del d.domain.name
 
 Extensions manipulate:
 - Set extension object:
