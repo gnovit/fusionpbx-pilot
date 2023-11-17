@@ -13,26 +13,34 @@ class ExtensionNotFound(Exception):
         self.extension_name = extension_name
 
 
-class Extension(ABC):
+class Extensions(ABC):
     """FusionPBX class to handle extension management"""
 
     def __init__(self, page):
         self.page = page
         self.uuid = None
 
-    def __call__(self, name):
-        self.name = name
-        return self
-
-    @property
     def list(self):
         self.page.open(app_path)
-        return self.page.container_rows_to_dict()
-    
-    def toggle(self, list[extension]):
-        pass
+        items = {
+            "enabled": (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
+            "description": (
+                By.CSS_SELECTOR,
+                'td[class="description overflow hide-sm-dn"]',
+            ),
+        }
+        return self.page.container_rows(items)
 
-    def 
+    def toggle(self, extensions: list):
+        """Toggle extensions Enabled/Disabled
+
+        Args:
+            extensions (list): List of extensions to toggle
+        """
+
+        self.page.open(app_path)
+        self.page.select_rows(extensions)
+        # WIP: Need to click on toogle button to complete the action
 
     def __repr__(self):
         return f"<Extension: {self.list}>"

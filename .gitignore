@@ -55,3 +55,4 @@ __pycache__
 .env
 stuff/
 .secrets.toml
+.test.py

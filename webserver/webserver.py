@@ -9,7 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import settings as conf
 import sys
 from selenium.webdriver import Firefox
-
 from pilot.page_objects import FusionPBX
 
 
@@ -50,10 +49,12 @@ except Exception as e:
     sys.exit(0)
 
 browser = Firefox()
-fusionpbx = FusionPBX(browser, conf.fusionpbx.url, conf.fusionpbx.user, conf.fusionpbx.password)
+fusionpbx = FusionPBX(
+    browser, conf.fusionpbx.url, conf.fusionpbx.user, conf.fusionpbx.password
+)
 
 app = FastAPI(
-    title="FusionPBX API",
+    title="Gnovit FusionPBX API",
     version=__version__,
     contact={
         "name": "Gnovit Open Source Consulting",
@@ -78,36 +79,38 @@ async def read_current_user(user: str = Depends(authenticate)):
     return f"{user}"
 
 
-@app.get("/v1/domain/list")
+@app.get("/v1/domains/list")
 async def domains_list(user: str = Depends(authenticate)):
     # f = FusionPBX(conf.fusionpbx.url, conf.fusionpbx.user, conf.fusionpbx.password)
     # domains = f.list_domains
-    return fusionpbx.domain.list
+    return fusionpbx.domains.list()
 
 
 @app.put("/v1/domain/{domain}")
 async def domain_create(domain: str, user: str = Depends(authenticate)):
     # create domain
-    fusionpbx.domain.name = domain
-    return fusionpbx.domain.name
+    d = fusionpbx.domain.name = domain
+    return d
 
 
 @app.put("/v1/domain/{domain}/name/{new_name}")
 async def domain_rename(domain: str, new_name: str, user: str = Depends(authenticate)):
     # rename domain
-    fusionpbx.domain.name = domain
-    fusionpbx.domain.name = new_name
-    return fusionpbx.domain.name
+    d = fusionpbx.domain(domain)
+    d.name = new_name
+    return d
 
 
 @app.delete("/v1/domain/{domain}")
 async def domain_delete(domain: str, user: str = Depends(authenticate)):
     # delete domain
-    fusionpbx.domain.name = domain
-    del fusionpbx.domain.name
-    return fusionpbx.domain.name
+    d = fusionpbx.domain(domain)
+    del d.name
+    return d.name
 
 
-@app.get("/v1/domain/{domain}}/extension/list")
+@app.get("/v1/domain/{domain}/extensions/list")
 async def extensions_list(domain: str, user: str = Depends(authenticate)):
-    return
+    # list extensions
+    d = fusionpbx.domain(domain)
+    return d.extensions.list()

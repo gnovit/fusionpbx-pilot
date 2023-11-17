@@ -73,7 +73,8 @@ class Page(SeleniumObject, ABC):
                 By.CSS_SELECTOR, "input[type='hidden']"
             ).get_attribute("value")
             name = row.find_element(By.CSS_SELECTOR, "td a[title='Edit']").text
-            d[name] = uuid
+            d["name"] = name
+            d["uuid"] = uuid
             if items:
                 for key in items:
                     key_value = row.find_element(*items[key]).text
@@ -156,7 +157,13 @@ class Page(SeleniumObject, ABC):
             dropdown.select_by_value("false")
             return value
 
-    def search_field(self, text: str):
-        self.fill_form((By.ID, "search"), text)
+    def search_name(self, value: str) -> list[dict]:
+        self.fill_form((By.ID, "search"), value)
         self.click_button((By.ID, "btn_search"))
-        return self.container_rows_to_dict()
+        return self.container_rows()
+
+    def search_exact_name(self, value: str) -> [dict]:
+        for row in self.search_name(value):
+            if row["name"] == value:
+                return row
+        return {}

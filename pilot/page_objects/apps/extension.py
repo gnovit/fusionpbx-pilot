@@ -24,10 +24,9 @@ class Extension(ABC):
         self.name = name
         return self
 
-    # @property
-    # def list(self):
-    #     self.page.open(app_path)
-    #     return self.page.container_rows_to_dict()
+    def _satity_check(self):
+        if not self.uuid:
+            raise ExtensionNotFound(None)
 
     @property
     def name(self):
@@ -40,11 +39,11 @@ class Extension(ABC):
     def name(self, name: str):
         """Set/Rename the current extension name"""
         self.page.open(app_path)
-        search = self.page.search_field(name)
+        search = self.page.search_exact_name(name)
         if self.uuid is None:
-            if name in search:
+            if search and search['name']:
                 # Already exists
-                self.uuid = search[name]
+                self.uuid = search['uuid']
                 self._name = str(name)
                 return self.name
             else:
@@ -55,7 +54,7 @@ class Extension(ABC):
                 self.page.click_button((By.ID, "btn_save"))
                 self._name = str(name)
                 self.page.open(app_path)
-                self.uuid = self.page.search_field(name)[str(name)]
+                self.uuid = self.page.search_exact_name(name)['uuid']
                 return self.name
 
         elif self.uuid is not None:
@@ -83,12 +82,14 @@ class Extension(ABC):
 
     @property
     def password(self):
+        self._satity_check()
         self.page.open(f"{app_edit_path}?id={self.uuid}")
         return self.page.find_element((By.ID, "password")).get_attribute("value")
 
     @password.setter
     def password(self, password):
         """Set the current password"""
+        self._satity_check()
         self.page.open(f"{app_edit_path}?id={self.uuid}")
         self.page.fill_form((By.NAME, "password"), password)
         self.page.click_button((By.ID, "btn_save"))
@@ -96,12 +97,14 @@ class Extension(ABC):
 
     @property
     def voicemail_mail_to(self):
+        self._satity_check()
         self.page.open(f"{app_edit_path}?id={self.uuid}")
         return self.page.find_element((By.NAME, "voicemail_mail_to")).get_attribute("value")
 
     @voicemail_mail_to.setter
     def voicemail_mail_to(self, email):
         """Set the current voicemail_mail_to"""
+        self._satity_check()
         self.page.open(f"{app_edit_path}?id={self.uuid}")
         self.page.fill_form((By.NAME, "voicemail_mail_to"), email)
         self.page.click_button((By.ID, "btn_save"))
@@ -110,6 +113,7 @@ class Extension(ABC):
     @voicemail_mail_to.deleter
     def voicemail_mail_to(self):
         """Delete the current voicemail_mail_to"""
+        self._satity_check()
         self.page.open(f"{app_edit_path}?id={self.uuid}")
         locator = (By.NAME, "voicemail_mail_to")
         field = self.page.find_element(locator)
@@ -119,6 +123,7 @@ class Extension(ABC):
 
     @property
     def voicemail_enabled(self):
+        self._satity_check()
         self.page.open(f"{app_edit_path}?id={self.uuid}")
         value = self.page.get_bool_from_list_field((By.NAME, "voicemail_enabled"))
         return value
@@ -126,6 +131,7 @@ class Extension(ABC):
     @voicemail_enabled.setter
     def voicemail_enabled(self, enabled: bool):
         """Set the current voicemail_enabled"""
+        self._satity_check()
         if enabled != self.voicemail_enabled:
             self.page.open(f"{app_edit_path}?id={self.uuid}")
             self.page.set_bool_from_list_field((By.NAME, "voicemail_enabled"), enabled)
