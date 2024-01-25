@@ -1,4 +1,6 @@
-
+"""
+Function to create random domains
+"""
 def create_random_domains(num):
     import random
     import string
