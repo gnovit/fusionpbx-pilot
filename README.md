@@ -51,5 +51,3 @@ Extensions manipulate
 ``` python
 e = d.extension = <extension_number>
 ```
-
-C0mpl3xP4ssw0rd
