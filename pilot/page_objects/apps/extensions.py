@@ -6,6 +6,8 @@ app_edit_path = "/app/extensions/extension_edit.php"
 
 
 class ExtensionNotFound(Exception):
+    """Exception raised when an extension is not found."""
+
     def __init__(self, extension_name, message=None):
         if message is None:
             message = f"Extension {extension_name} not found"
@@ -20,22 +22,32 @@ class Extensions(ABC):
         self.page = page
         self.uuid = None
 
-    def list(self):
-        self.page.open(app_path)
-        items = {
-            "enabled": (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
-            "description": (
-                By.CSS_SELECTOR,
-                'td[class="description overflow hide-sm-dn"]',
-            ),
-        }
-        return self.page.container_rows(items)
+    class Extensions:
+        def list(self):
+            """
+            Retrieves a list of extensions from the page.
+
+            Returns:
+                dict: A dictionary containing the enabled status and description of each extension.
+            """
+            self.page.open(app_path)
+            items = {
+                "enabled": (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
+                "description": (
+                    By.CSS_SELECTOR,
+                    'td[class="description overflow hide-sm-dn"]',
+                ),
+            }
+            return self.page.container_rows(items)
 
     def toggle(self, extensions: list):
         """Toggle extensions Enabled/Disabled
 
         Args:
             extensions (list): List of extensions to toggle
+
+        Returns:
+            None
         """
 
         self.page.open(app_path)

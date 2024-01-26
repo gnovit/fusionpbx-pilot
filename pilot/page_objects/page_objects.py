@@ -65,6 +65,7 @@ class Page(SeleniumObject, ABC):
         Returns:
             dic: {name: uuid, item[key]: value}
         """
+
         container_rows = self.find_elements((By.CLASS_NAME, "list-row"))
         cr = []
         for row in container_rows:
@@ -112,6 +113,18 @@ class Page(SeleniumObject, ABC):
             return True
 
     def open(self, url):
+        """
+        Opens the specified URL.
+
+        Args:
+            url (str): The URL to open.
+
+        Raises:
+            AccessError: If the user does not have permission to access the page.
+
+        Returns:
+            None
+        """
         self._open(self.base_url + url)
         # TODO: Maybe check cookie?
         if "login.php" in self.webdriver.current_url or "Login" in self.webdriver.title:
@@ -127,6 +140,19 @@ class Page(SeleniumObject, ABC):
         return
 
     def login(self, login_user, login_password):
+        """
+        Logs in to the application using the provided username and password.
+
+        Args:
+            login_user (str): The username to login with.
+            login_password (str): The password to login with.
+
+        Raises:
+            LoginError: If the login fails.
+
+        Returns:
+            None
+        """
         self.fill_form((By.ID, "username"), login_user)
         self.fill_form((By.NAME, "password"), login_password)
         self.click_button((By.ID, "btn_login"))
@@ -137,6 +163,15 @@ class Page(SeleniumObject, ABC):
         return
 
     def get_bool_from_list_field(self, locator: tuple):
+        """
+        Retrieves a boolean value from a dropdown list field.
+
+        Args:
+            locator (tuple): The locator of the dropdown list field.
+
+        Returns:
+            bool: The boolean value retrieved from the dropdown list field.
+        """
         field = self.find_element(locator)
         dropdown = Select(field)
         if dropdown.first_selected_option.accessible_name == "True":
@@ -145,6 +180,19 @@ class Page(SeleniumObject, ABC):
             return False
 
     def set_bool_from_list_field(self, locator: tuple, value: bool):
+        """
+        Sets the value of a boolean field in a dropdown list.
+
+        Args:
+            locator (tuple): The locator of the dropdown field.
+            value (bool): The boolean value to be set.
+
+        Returns:
+            bool: The boolean value that was set.
+
+        Raises:
+            TypeError: If the value is not a boolean.
+        """
         if not isinstance(value, bool):
             raise TypeError("value must be boolean")
 
@@ -158,11 +206,29 @@ class Page(SeleniumObject, ABC):
             return value
 
     def search_name(self, value: str) -> list[dict]:
+        """
+        Searches for a name in the page.
+
+        Args:
+            value (str): The name to search for.
+
+        Returns:
+            list[dict]: A list of dictionaries representing the container rows.
+        """
         self.fill_form((By.ID, "search"), value)
         self.click_button((By.ID, "btn_search"))
         return self.container_rows()
 
     def search_exact_name(self, value: str) -> [dict]:
+        """
+        Searches for an exact name match in the search results.
+
+        Args:
+            value (str): The name to search for.
+
+        Returns:
+            dict: The row containing the exact name match, or an empty dictionary if no match is found.
+        """
         for row in self.search_name(value):
             if row["name"] == value:
                 return row
