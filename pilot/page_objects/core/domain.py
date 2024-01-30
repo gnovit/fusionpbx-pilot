@@ -6,7 +6,6 @@ from pilot.page_objects.page_objects import AccessError
 from selenium.common.exceptions import NoSuchElementException
 
 
-
 app_path = "/core/domains/domains.php"
 app_edit_path = "/core/domains/domain_edit.php"
 
@@ -60,7 +59,8 @@ class Domain(ABC):
                     (By.XPATH, "//*[@id='header_domain_selector_domain']")
                 ).text
             except NoSuchElementException:
-                # Fusionpbx Version  4.5.28 
+                # Fusionpbx Version  4.5.28
+                # TODO: Create an exception class to threat FusionPBX changes versions.
                 return self.page.find_element((By.CSS_SELECTOR, ".domain_selector_domain")).text
 
         except AccessError:

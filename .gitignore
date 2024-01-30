@@ -52,7 +52,10 @@ __pycache__
 
 # Ignore dynaconf secret files
 .secrets/
+
 .env
+
 stuff/
 .secrets.toml
 .test.py
+.*/
