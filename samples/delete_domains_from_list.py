@@ -6,17 +6,16 @@ on Advanced/Group Manager/Permissions/ for Superadmin group or group of user tha
 
 from selenium.webdriver import Firefox
 from pilot.page_objects import FusionPBX
+from dotenv import dotenv_values
 
 browser = Firefox()
+
+config = dotenv_values(".env")
 
 # Domains to be kept
 FORGET = ["domain.com", "172.17.0.1", "another.domain.com"]
 
-url = "pbx.domain.com"        # URL of your FusionPBX
-user = "pilot"                # User with superadmin privileges
-password = "C0mpl3xP4ssw0rd"  # Password for the user
-
-f = FusionPBX(browser, url, user, password)
+f = FusionPBX(browser, config["URL"], config["USER"], config["PASSWORD"])
 
 all_domains = f.domains.list()
 

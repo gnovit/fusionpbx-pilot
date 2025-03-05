@@ -1,7 +1,7 @@
 from abc import ABC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-
+from selenium.common.exceptions import NoSuchElementException
 
 class LoginError(Exception):
     def __init__(self, message=None):
@@ -73,7 +73,12 @@ class Page(SeleniumObject, ABC):
             uuid = row.find_element(
                 By.CSS_SELECTOR, "input[type='hidden']"
             ).get_attribute("value")
-            name = row.find_element(By.CSS_SELECTOR, "td a[title='Edit']").text
+            try:
+                name = row.find_element(By.CSS_SELECTOR, "td a[title='Edit']").text
+            # by some reason FusionPBX is not respecting language attrs in some pages
+            except NoSuchElementException:
+                name = row.find_element(By.CSS_SELECTOR, "td a[title='Editar']").text
+            
             d["name"] = name
             d["uuid"] = uuid
             if items:
@@ -219,7 +224,7 @@ class Page(SeleniumObject, ABC):
         self.click_button((By.ID, "btn_search"))
         return self.container_rows()
 
-    def search_exact_name(self, value: str) -> [dict]:
+    def search_exact_name(self, value: str) -> dict:
         """
         Searches for an exact name match in the search results.
 

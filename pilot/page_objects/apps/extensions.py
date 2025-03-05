@@ -22,23 +22,23 @@ class Extensions(ABC):
         self.page = page
         self.uuid = None
 
-    class Extensions:
-        def list(self):
-            """
-            Retrieves a list of extensions from the page.
+    # class Extensions:
+    def list(self):
+        """
+        Retrieves a list of extensions from the page.
 
-            Returns:
-                dict: A dictionary containing the enabled status and description of each extension.
-            """
-            self.page.open(app_path)
-            items = {
-                "enabled": (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
-                "description": (
-                    By.CSS_SELECTOR,
-                    'td[class="description overflow hide-sm-dn"]',
-                ),
-            }
-            return self.page.container_rows(items)
+        Returns:
+            dict: A dictionary containing the enabled status and description of each extension.
+        """
+        self.page.open(app_path)
+        items = {
+            "enabled": (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
+            "description": (
+                By.CSS_SELECTOR,
+                'td[class="description overflow hide-sm-dn"]',
+            ),
+        }
+        return self.page.container_rows(items)
 
     def toggle(self, extensions: list):
         """Toggle extensions Enabled/Disabled
