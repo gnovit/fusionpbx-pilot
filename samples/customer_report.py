@@ -1,5 +1,5 @@
 """
-This script will list all extensions on a domain or subdomain based on text passed to the script by command line.
+This script will Create a html and pdf report of all extensions on a domain and its subdomains based on text passed to the script by command line.
 copy samples/.env.sample to samples/.env and fill the values with your FusionPBX credentials.
 Ex.
 python samples/customer_report.py 'mydomain.com'
@@ -9,8 +9,6 @@ python samples/customer_report.py '.com'
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 from pilot.page_objects import FusionPBX
-
-
 
 from dotenv import dotenv_values
 import sys
@@ -53,7 +51,7 @@ header = """<!DOCTYPE html>
 </head>
  """
 
-header += "<h1>gnovit.net Cloud Telephony Customer Report</h1>\n"
+header += "<h1>Customer Report</h1>\n"
 header += f"<h2>Date: {datetime.now().strftime('%d/%m/%Y')}</h2>\n"
 header += f"<h2>Domain: {DOMAIN}</h2>\n"
 
@@ -64,7 +62,7 @@ base_domain_report.append("<tr><th align='left'>Name</th><th align='center'>Desc
 
 sub_domains_report = []
 sub_domains_report.append("<table>")
-sub_domains_report.append("<tr><th colspan='3'> Sub Domains (condominium)</th></tr>")
+sub_domains_report.append("<tr><th colspan='3'> Sub Domains</th></tr>")
 sub_domains_report.append("<tr><th align='left'>Name</th><th align='center'>Description</th align='right'><th>Extensions</th></tr>")
 
 for domain in domains:
