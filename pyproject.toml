@@ -1,7 +1,7 @@
 [project]
 authors = [{ name = "Marcelo Araujo", email = "marcelo@gnovit.com" }]
 name = "fusionpbx_pilot"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python client LIB for FusionPBX"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
