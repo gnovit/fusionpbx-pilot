@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: fusionpbx_pilot
-Version: 0.1.1
+Version: 0.1.2
 Summary: Python client LIB for FusionPBX
 Author-email: Marcelo Araujo <marcelo@gnovit.com>
 License-Expression: GPL-3.0-or-later
