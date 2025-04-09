@@ -4,7 +4,7 @@ This script will change the voicemail settings for a list of extensions loaded f
 
 import timeit
 from selenium.webdriver import Firefox
-from pilot.page_objects import FusionPBX
+from fusionpbx_pilot.page_objects import FusionPBX
 import csv
 
 from dotenv import dotenv_values

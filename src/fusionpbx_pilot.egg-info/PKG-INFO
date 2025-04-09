@@ -1,11 +1,21 @@
 Metadata-Version: 2.4
-Name: fusionpbx-pilot
+Name: fusionpbx_pilot
 Version: 0.1.0
 Summary: Python client LIB for FusionPBX
 Author-email: Marcelo Araujo <marcelo@gnovit.com>
 License-Expression: GPL-3.0-or-later
+Project-URL: Homepage, https://github.com/gnovit/fusionpbx-pilot
+Project-URL: Issues, https://github.com/gnovit/fusionpbx-pilot/issues
+Keywords: fusionpbx,telephony,voip,python,client-library,communication,sip,automation
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Communications :: Telephony
+Classifier: Development Status :: 4 - Beta
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: attrs>=25.3.0
 Requires-Dist: certifi>=2025.1.31
 Requires-Dist: h11>=0.14.0
@@ -20,17 +30,17 @@ Requires-Dist: trio-websocket>=0.12.2
 Requires-Dist: typing-extensions>=4.13.1
 Requires-Dist: urllib3>=2.3.0
 Requires-Dist: wsproto>=1.2.0
+Dynamic: license-file
 
 FusionPBX Pilot Python Library
 ==============================
 
-Gnovit
-https://www.gnovit.com
+[Gnovit](https://www.gnovit.com)
 
-fusionpbx-pilot@gnovit.com
+email: fusionpbx-pilot@gnovit.com
 
-This python library is intended to automate FusionPBX administration tasks.
-This library is based on Selenium WebDrive and abstracts FusionPBX apps as python objects.
+This python library is intended to automate [FusionPBX](https://www.fusionpbx.com) administration tasks.
+This library is based on Selenium WebDrive and abstracts FusionPBX objects as python objects.
 Shold be used in an API to manage FusionPBX.
 This is licensed under the terms of the GNU GPL v3 license.
 
@@ -74,3 +84,8 @@ Extensions manipulate
 ``` python
 e = d.extension = <extension_number>
 ```
+
+Contributions
+-------------
+Contribuitions are welcome.
+Please fork the project and send a pull request.

@@ -5,7 +5,7 @@ on Advanced/Group Manager/Permissions/ for Superadmin group or group of user tha
 """
 
 from selenium.webdriver import Firefox
-from pilot.page_objects import FusionPBX
+from fusionpbx_pilot.page_objects import FusionPBX
 from dotenv import dotenv_values
 
 browser = Firefox()

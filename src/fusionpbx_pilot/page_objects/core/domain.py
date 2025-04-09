@@ -1,8 +1,8 @@
 from abc import ABC
-from pilot.page_objects.apps import Extension
-from pilot.page_objects.apps import Extensions
+from fusionpbx_pilot.page_objects.apps import Extension
+from fusionpbx_pilot.page_objects.apps import Extensions
 from selenium.webdriver.common.by import By
-from pilot.page_objects.page_objects import AccessError
+from fusionpbx_pilot.page_objects.page_objects import AccessError
 from selenium.common.exceptions import NoSuchElementException
 
 

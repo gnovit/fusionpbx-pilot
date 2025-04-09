@@ -1,11 +1,10 @@
 [project]
-authors = [
-    { name = "Marcelo Araujo", email = "marcelo@gnovit.com" }
-]
-name = "fusionpbx-pilot"
+authors = [{ name = "Marcelo Araujo", email = "marcelo@gnovit.com" }]
+name = "fusionpbx_pilot"
 version = "0.1.0"
 description = "Python client LIB for FusionPBX"
 license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -24,3 +23,25 @@ dependencies = [
     "urllib3>=2.3.0",
     "wsproto>=1.2.0",
 ]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Communications :: Telephony",
+    "Development Status :: 4 - Beta",
+]
+
+keywords = [
+    "fusionpbx",
+    "telephony",
+    "voip",
+    "python",
+    "client-library",
+    "communication",
+    "sip",
+    "automation",
+]
+[project.urls]
+Homepage = "https://github.com/gnovit/fusionpbx-pilot"
+Issues = "https://github.com/gnovit/fusionpbx-pilot/issues"

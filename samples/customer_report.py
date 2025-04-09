@@ -8,7 +8,7 @@ python samples/customer_report.py '.com'
 
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-from pilot.page_objects import FusionPBX
+from fusionpbx_pilot.page_objects import FusionPBX
 
 from dotenv import dotenv_values
 import sys

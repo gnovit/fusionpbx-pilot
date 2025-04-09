@@ -1,5 +1,5 @@
-from pilot.page_objects import Page
-from pilot.page_objects.core import Domain, Domains
+from fusionpbx_pilot.page_objects import Page
+from fusionpbx_pilot.page_objects.core import Domain, Domains
 
 
 class FusionPBX():
