@@ -1,11 +1,11 @@
 [project]
 authors = [
-    { sponsor = "Gnovit Tecnologia", },
-]name = "fusionpbx-pilot"
+    { name = "Marcelo Araujo", email = "marcelo@gnovit.com" }
+]
+name = "fusionpbx-pilot"
 version = "0.1.0"
-description = "Python client for FusionPBX"
-sponsor = "Gnovit Tecnologia"
-license = "GNU GPL 3.0"
+description = "Python client LIB for FusionPBX"
+license = "GPL-3.0-or-later"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

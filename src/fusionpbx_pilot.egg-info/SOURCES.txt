@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+src/fusionpbx_pilot.egg-info/PKG-INFO
+src/fusionpbx_pilot.egg-info/SOURCES.txt
+src/fusionpbx_pilot.egg-info/dependency_links.txt
+src/fusionpbx_pilot.egg-info/requires.txt
+src/fusionpbx_pilot.egg-info/top_level.txt
