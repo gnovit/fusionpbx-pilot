@@ -66,7 +66,7 @@ Extensions manipulate
 d.extensions.list()
 ```
 
-- Set or create a extension object:
+- Set or create an extension object:
   
 ``` python
 e = d.extension('<extension_name>')
