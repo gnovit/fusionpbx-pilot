@@ -65,3 +65,5 @@ customer_report.html
 customer_report.pdf
 customer_report_gnovit.py
 build/
+# Python egg-info
+*.egg-info/
