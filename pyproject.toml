@@ -45,3 +45,9 @@ keywords = [
 [project.urls]
 Homepage = "https://github.com/gnovit/fusionpbx-pilot"
 Issues = "https://github.com/gnovit/fusionpbx-pilot/issues"
+
+[dependency-groups]
+dev = [
+    "dotenv>=0.9.9",
+    "weasyprint>=65.1",
+]
