@@ -21,12 +21,27 @@ source .venv/bin/activate
 pip install fusionpbx-pilot
 ```
 
-Instantiate the FusionPBX class:
+Install webdriver_manager to automatically manage the browser driver:
+
+``` bash
+pip install webdriver_manager
+
+```
+
+Install GeckoDriver and instantiate the FusionPBX class:
 
 ``` python
-from selenium.webdriver import Firefox
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from fusionpbx_pilot.page_objects import FusionPBX
-f = FusionPBX(Firefox(), '<https://addr>', '<login_user>', '<login_password>')
+
+
+service = FirefoxService(GeckoDriverManager().install())
+driver = webdriver.Firefox(service=service)
+
+f = FusionPBX(driver, '<https://addr>', '<login_user>', '<login_password>')
 ```
 
 - Set domain object: If domain no exist, create it, returning existing domain object:
