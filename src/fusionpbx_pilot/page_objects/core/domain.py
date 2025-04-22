@@ -25,7 +25,7 @@ class Domain(ABC):
         self.page = page
         self.uuid = None
 
-    def __call__(self, name):
+    def __call__(self, name, create:bool = False):
         self.name = name
         return self
 
@@ -38,7 +38,7 @@ class Domain(ABC):
         return Extension(self.page)
 
     @extension.setter
-    def extension(self, name):
+    def extension(self, name, create:bool = False):
         self.extension.name = name
 
     @extension.deleter
@@ -51,6 +51,7 @@ class Domain(ABC):
 
     @property
     def name(self):
+        
         """Return the current domain"""
         try:
             self.page.open(app_path)

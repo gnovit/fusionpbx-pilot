@@ -3,7 +3,7 @@ FusionPBX Pilot Python Library
 
 [Gnovit](https://www.gnovit.com)
 
-email: fusionpbx-pilot@gnovit.com
+email: <fusionpbx-pilot@gnovit.com>
 
 This python library is intended to automate [FusionPBX](https://www.fusionpbx.com) administrative tasks.
 This library is based on Selenium WebDriver and abstracts FusionPBX objects as python objects.
@@ -134,9 +134,6 @@ e.uuid
 ``` python
 del d.extension.name
 ```
-
-
-
 
 Contributions
 -------------
