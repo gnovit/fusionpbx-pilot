@@ -100,6 +100,8 @@ class Domain(ABC):
                 raise Exception(f'Domain {name} already exists')
             self.page.open(f'{app_edit_path}?id={self.uuid}')
             self.page.fill_form((By.NAME, 'domain_name'), name)
+            self.page.click_button((By.ID, 'btn_save'))
+
             return self._switch_to(name)
 
     @name.deleter

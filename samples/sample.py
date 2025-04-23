@@ -28,5 +28,8 @@ f = FusionPBX(
 
 d = f.domain(fake_domain, create=True)
 print(f.domain.name)
+# rename the domain
 d.name = f'{fake_domain}-renamed'
 print(f.domain.name)
+
+

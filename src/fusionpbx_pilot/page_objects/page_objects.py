@@ -1,7 +1,8 @@
 from abc import ABC
+
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
 
 
 class LoginError(Exception):
@@ -102,9 +103,10 @@ class Page(SeleniumObject, ABC):
         for name in names:
             for row in container_rows:
                 if name in row:
-                    hidden_element = self.find_element(
-                        (By.CSS_SELECTOR, f"input[value='{row[name]}']")
-                    )
+                    hidden_element = self.find_element((
+                        By.CSS_SELECTOR,
+                        f"input[value='{row[name]}']",
+                    ))
                     hidden_element.find_element(By.XPATH, '..').click()
 
     def has_permission(self):
@@ -137,13 +139,10 @@ class Page(SeleniumObject, ABC):
             self.login(self.login_user, self.login_password)
         if self.webdriver.current_url != self.base_url + url:
             self._open(self.base_url + url)
-        if self.has_permission():
-            return
-        else:
+        if not self.has_permission():
             raise AccessError(
                 f'User {self.login_user} has no permission to access page {self.base_url + url}'
             )
-        return
 
     def login(self, login_user, login_password):
         """
