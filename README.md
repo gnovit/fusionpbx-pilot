@@ -44,11 +44,19 @@ driver = webdriver.Firefox(service=service)
 f = FusionPBX(driver, '<https://addr>', '<login_user>', '<login_password>')
 ```
 
-- Set domain object: If domain no exist, create it, returning existing domain object:
+- Set domain object: If domain no exist, raises DomainNotFound exception.
 
 ``` python
 d = f.domain('<domain_name>')
 ```
+
+- To create a new domain, use the following:
+
+``` python
+d = f.domain('<domain_name>', create=True)
+```
+
+Returns a new domain object.
 
 Domain manipulate
 --------------------
