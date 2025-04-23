@@ -2,7 +2,7 @@ from abc import ABC
 from selenium.webdriver.common.by import By
 
 
-app_path = "/core/domains/domains.php"
+app_path = '/core/domains/domains.php'
 
 
 class Domains(ABC):
@@ -14,8 +14,8 @@ class Domains(ABC):
     def list(self):
         self.page.open(app_path)
         items = {
-            "enabled": (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
-            "description": (
+            'enabled': (By.CSS_SELECTOR, 'td button[title="Toggle"] span'),
+            'description': (
                 By.CSS_SELECTOR,
                 'td[class="description overflow hide-sm-dn"]',
             ),
@@ -34,4 +34,4 @@ class Domains(ABC):
         # WIP: Need to click on toogle button to complete the action
 
     def __repr__(self):
-        return f"<Domains: {self.list()}>"
+        return f'<Domains: {self.list()}>'
