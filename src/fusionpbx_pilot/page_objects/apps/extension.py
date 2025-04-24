@@ -1,4 +1,5 @@
 from abc import ABC
+
 from selenium.webdriver.common.by import By
 
 app_path = '/app/extensions/extensions.php'
@@ -20,7 +21,8 @@ class Extension(ABC):
         self.page = page
         self.uuid = None
 
-    def __call__(self, name):
+    def __call__(self, name, create: bool = False):
+        self._create = create
         self.name = name
         return self
 
@@ -46,7 +48,7 @@ class Extension(ABC):
                 self.uuid = search['uuid']
                 self._name = str(name)
                 return self.name
-            else:
+            elif self._create:
                 # Create
                 self.page.open(app_path)
                 self.page.click_button((By.ID, 'btn_add'))
@@ -56,6 +58,9 @@ class Extension(ABC):
                 self.page.open(app_path)
                 self.uuid = self.page.search_exact_name(name)['uuid']
                 return self.name
+            else:
+                # Not found
+                raise ExtensionNotFound(name)
 
         elif self.uuid is not None:
             # Rename
@@ -73,9 +78,10 @@ class Extension(ABC):
     def name(self):
         """Delete the current extension"""
         self.page.open(app_path)
-        self.page.click_button(
-            (By.XPATH, f"//a[text()='{self._name}']/../..//input[@type='checkbox']")
-        )
+        self.page.click_button((
+            By.XPATH,
+            f"//a[text()='{self._name}']/../..//input[@type='checkbox']",
+        ))
         self.page.click_button((By.ID, 'btn_delete'))
         self.page.click_button((By.XPATH, "//span[text()='Extension & Voicemail']"))
         del self._name
