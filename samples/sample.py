@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.fiquirefox import GeckoDriverManager
 
 from fusionpbx_pilot.page_objects import FusionPBX
 
@@ -26,10 +26,6 @@ f = FusionPBX(
     os.getenv('PYTEST_PASSWORD'),
 )
 
-d = f.domain(fake_domain, create=True)
-print(f.domain.name)
-# rename the domain
-d.name = f'{fake_domain}-renamed'
-print(f.domain.name)
+d = f.domain(fake_domain)
 
 

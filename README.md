@@ -7,7 +7,7 @@ email: <fusionpbx-pilot@gnovit.com>
 
 This python library is intended to automate [FusionPBX](https://www.fusionpbx.com) administrative tasks.
 This library is based on Selenium WebDriver and abstracts FusionPBX objects as python objects.
-Shold be used in an API to manage FusionPBX.
+Should be used in an API to manage FusionPBX.
 This is licensed under the terms of the GNU GPL v3 license.
 
 Examples
