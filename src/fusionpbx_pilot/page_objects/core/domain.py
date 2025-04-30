@@ -56,17 +56,21 @@ class Domain(ABC):
         try:
             self.page.open(app_path)
             try:
-                return self.page.find_element((
-                    By.XPATH,
-                    "//*[@id='header_domain_selector_domain']",
-                )).text
+                return self.page.find_element(
+                    (
+                        By.XPATH,
+                        "//*[@id='header_domain_selector_domain']",
+                    )
+                ).text
             except NoSuchElementException:
                 # Fusionpbx Version  4.5.28
                 # TODO: Create an exception class to threat FusionPBX changes versions.
-                return self.page.find_element((
-                    By.CSS_SELECTOR,
-                    '.domain_selector_domain',
-                )).text
+                return self.page.find_element(
+                    (
+                        By.CSS_SELECTOR,
+                        '.domain_selector_domain',
+                    )
+                ).text
 
         except AccessError:
             return self.page.login_user.split('@')[1]
@@ -108,16 +112,20 @@ class Domain(ABC):
     def name(self):
         """Delete the current domain"""
         self.page.open(app_path)
-        self.page.click_button((
-            By.XPATH,
-            f"//a[text()='{self.name}']/../..//input[@type='checkbox']",
-        ))
+        self.page.click_button(
+            (
+                By.XPATH,
+                f"//a[text()='{self.name}']/../..//input[@type='checkbox']",
+            )
+        )
         self.page.click_button((By.ID, 'btn_delete'))
         #
-        self.page.click_button((
-            By.XPATH,
-            '//button[@id="btn_delete"][@title="Continue"]',
-        ))
+        self.page.click_button(
+            (
+                By.XPATH,
+                '//button[@id="btn_delete"][@title="Continue"]',
+            )
+        )
         # self._list = self.list
 
     def __repr__(self):

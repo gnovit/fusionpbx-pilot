@@ -1,48 +1,55 @@
 import pytest
 
-from fusionpbx_pilot.page_objects.core.domain import DomainNotFound
+from fusionpbx_pilot.page_objects.apps.extension import ExtensionNotFound
 
 
-def test_domain_get_unexisting(fusionpbx):
-    """Test to get a domain that does not exist."""
-    with pytest.raises(DomainNotFound) as excinfo:
-        fusionpbx.domain('nonexistent-domain.pytest')
-    assert str(excinfo.value) == 'Domain nonexistent-domain.pytest not found', (
-        'Should raise DomainNameNotFound exception'
+def test_extension_get_unexisting(fusionpbx):
+    """Test to get a extension that does not exist."""
+    with pytest.raises(ExtensionNotFound) as excinfo:
+        fusionpbx.domain('fusionpbx-pilot.pytest').extension('unexisting-extension')
+    assert str(excinfo.value) == 'Extension unexisting-extension not found', (
+        'Should raise ExtensionNotFound exception'
     )
 
 
 @pytest.mark.dependency()
-def test_domain_create(fusionpbx, test_domain):
-    d = fusionpbx.domain(test_domain, create=True)
-    assert d.name == test_domain, f'Domain name should be {test_domain}'
+def test_extension_create(fusionpbx):
+    e = fusionpbx.domain('fusionpbx-pilot.pytest').extension(
+        'test-extension', create=True
+    )
+    assert e.name == 'test-extension', 'Domain name should be test-extension'
 
 
-@pytest.mark.dependency(depends=['test_domain_create'])
-def test_domain_change_n_get_existing(fusionpbx, test_domain):
-    d = fusionpbx.domain(test_domain)
+@pytest.mark.dependency(depends=['test_extension_create'])
+def test_change_and_get_password(fusionpbx):
+    e = fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
+    e.password = 'test-password'
+    assert e.password == 'test-password', 'Password should be test-password'
 
-    assert d.name == test_domain, f'Domain name should be {test_domain}'
+
+@pytest.mark.dependency(depends=['test_extension_create'])
+def test_change_and_get_voicemail_enabled(fusionpbx):
+    e = fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
+    e.voicemail_enabled = True
+    assert e.voicemail_enabled, 'voicemail_enabled should be True'
+    e.voicemail_enabled = False
+    assert not e.voicemail_enabled, 'voicemail_enabled should be False'
 
 
-@pytest.mark.order(after='test_domain_change_n_get_existing')
-def test_domain_delete(fusionpbx, test_domain):
-    d = fusionpbx.domain(test_domain)
-    del d.name
-
-    with pytest.raises(DomainNotFound) as excinfo:
-        fusionpbx.domain(test_domain)
-    assert str(excinfo.value) == f'Domain {test_domain} not found', (
-        'Should raise DomainNameNotFound exception'
+@pytest.mark.dependency(depends=['test_extension_create'])
+def test_change_and_get_voicemail_mail_to(fusionpbx):
+    e = fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
+    e.voicemail_mail_to = 'test-user@pytest'
+    assert e.voicemail_mail_to == 'test-user@pytest', (
+        'voicemail_mail_to should be test-user@pytest'
     )
 
-
-@pytest.mark.order(before='test_domain_delete')
-@pytest.mark.dependency(depends=['test_domain_create'])
-def test_domain_rename(fusionpbx, test_domain):
-    d = fusionpbx.domain(test_domain)
-    new_name = f'{test_domain}-renamed'
-    d.name = new_name
-    assert d.name == new_name, f'Domain name should be {new_name}'
-    d.name = test_domain
-    assert d.name == test_domain, f'Domain name should be {test_domain}'
+@pytest.mark.dependency()#depends=['test_extension_create', 'test_change_and_get_voicemail_mail_to', 'test_change_and_get_voicemail_enabled', 'test_change_and_get_password',])
+def test_extension_delete(fusionpbx):
+    e = fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
+    del e.name
+    with pytest.raises(ExtensionNotFound) as excinfo:
+        fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
+    assert str(excinfo.value) == 'Extension test-extension not found', (
+        'Should raise ExtensionNotFound exception'
+    )

@@ -78,10 +78,12 @@ class Extension(ABC):
     def name(self):
         """Delete the current extension"""
         self.page.open(app_path)
-        self.page.click_button((
-            By.XPATH,
-            f"//a[text()='{self._name}']/../..//input[@type='checkbox']",
-        ))
+        self.page.click_button(
+            (
+                By.XPATH,
+                f"//a[text()='{self._name}']/../..//input[@type='checkbox']",
+            )
+        )
         self.page.click_button((By.ID, 'btn_delete'))
         self.page.click_button((By.XPATH, "//span[text()='Extension & Voicemail']"))
         del self._name

@@ -1,12 +1,11 @@
-def test_extensions_list(fusionpbx):
-    
-    extensions = fusionpbx.domain('fusionbpx-pilot.pytest').extensions.list()
+def test_domains_list(fusionpbx):
+    domains = fusionpbx.domains.list()
 
-    assert len(extensions) > 0, 'Find at least one extension'
-    assert isinstance(extensions, list), 'Extension should be a list'
-    assert all(isinstance(extension, dict) for extension in extensions), (
-        'Each Extension should be a dictionary'
+    assert len(domains) > 0, 'Find at least one Domain'
+    assert isinstance(domains, list), 'Domains should be a list'
+    assert all(isinstance(domain, dict) for domain in domains), (
+        'Each Domain should be a dictionary'
     )
-    assert any(extension.get('name') == '1000' for extension in extensions), (
-        "Find extension '1000'"
+    assert any(domain.get('name') == 'fusionpbx-pilot.pytest' for domain in domains), (
+        "Find domain 'fusionpbx-pilot.pytest'"
     )

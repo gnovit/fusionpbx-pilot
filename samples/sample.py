@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.fiquirefox import GeckoDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 from fusionpbx_pilot.page_objects import FusionPBX
 
@@ -28,4 +28,8 @@ f = FusionPBX(
 
 d = f.domain(fake_domain)
 
+e = d.extensions('1000')
 
+print(f'Extension: {e.name}')
+print(f'Extension: {e.uuid}')
+print(f'Extension: {e.voicemail}')
