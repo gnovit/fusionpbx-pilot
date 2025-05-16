@@ -22,6 +22,9 @@ class Extensions(ABC):
         self.page = page
         self.uuid = None
 
+    def __repr__(self):
+        return f'<Extensions: {self.list}>'
+
     # class Extensions:
     def list(self):
         """
@@ -53,6 +56,3 @@ class Extensions(ABC):
         self.page.open(app_path)
         self.page.select_rows(extensions)
         # WIP: Need to click on toogle button to complete the action
-
-    def __repr__(self):
-        return f'<Extension: {self.list}>'

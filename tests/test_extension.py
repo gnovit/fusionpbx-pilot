@@ -44,7 +44,18 @@ def test_change_and_get_voicemail_mail_to(fusionpbx):
         'voicemail_mail_to should be test-user@pytest'
     )
 
-@pytest.mark.dependency()#depends=['test_extension_create', 'test_change_and_get_voicemail_mail_to', 'test_change_and_get_voicemail_enabled', 'test_change_and_get_password',])
+
+@pytest.mark.dependency(depends=['test_extension_create'])
+def test_get_extension__dict__(fusionpbx):
+    e = fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
+    exten_dict = e.__dict__()
+    assert 'name' in exten_dict, 'Extension __dict__ should have key "name"'
+    assert 'password' in exten_dict, 'Extension __dict__ should have key "password"'
+    assert 'voicemail_enabled' in exten_dict, 'Extension __dict__ should have key "voicemail_enabled"'
+    assert 'voicemail_mail_to' in exten_dict, 'Extension __dict__ should have key "voicemail_mail_to"'
+
+
+@pytest.mark.dependency()  # depends=['test_extension_create', 'test_change_and_get_voicemail_mail_to', 'test_change_and_get_voicemail_enabled', 'test_change_and_get_password',])
 def test_extension_delete(fusionpbx):
     e = fusionpbx.domain('fusionpbx-pilot.pytest').extension('test-extension')
     del e.name

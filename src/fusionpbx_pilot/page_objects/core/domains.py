@@ -1,6 +1,6 @@
 from abc import ABC
-from selenium.webdriver.common.by import By
 
+from selenium.webdriver.common.by import By
 
 app_path = '/core/domains/domains.php'
 

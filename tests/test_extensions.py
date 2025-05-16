@@ -9,3 +9,4 @@ def test_extensions_list(fusionpbx):
     assert any(extension.get('name') == '1000' for extension in extensions), (
         "Find extension '1000'"
     )
+    assert extensions.__len__() > 0, 'Extensions should be a list'

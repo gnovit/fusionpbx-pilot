@@ -33,6 +33,16 @@ def test_domain_change_n_get_existing(fusionpbx, test_domain):
     assert d.name == test_domain, f'Domain name should be {test_domain}'
 
 
+@pytest.mark.dependency()
+def test_get_domain__dict__(fusionpbx, test_domain):
+    d = fusionpbx.domain(test_domain)
+    domain_dict = d.__dict__()
+    assert 'name' in domain_dict, 'Domain __dict__ should have key "name"'
+    assert domain_dict['name'] == test_domain, (
+        f'Domain __dict__ should have value {test_domain} for key "name"'
+    )
+
+
 @pytest.mark.order(after='test_domain_change_n_get_existing')
 def test_domain_delete(fusionpbx, test_domain):
     d = fusionpbx.domain(test_domain)
